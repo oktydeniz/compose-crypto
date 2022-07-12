@@ -9,7 +9,6 @@ import com.example.crypto_compose.util.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import retrofit2.Response
 import javax.inject.Inject
 
 
@@ -30,9 +29,9 @@ class ListViewModel @Inject constructor(
     private var initialCryptoItem = listOf<CryptoListItem>()
     private var isSearchStarting = true
 
-    private fun loadData () {
+    fun loadData () {
         viewModelScope.launch {
-            isLoading.value = true
+  //          isLoading.value = true
             val result = repository.getCryptoList()
             when(result){
                 is Resource.Success -> {
@@ -52,7 +51,10 @@ class ListViewModel @Inject constructor(
 
     }
 
-    private fun searchCryptoList(q : String) {
+    fun searchCryptoList(q : String) {
+        //if search start listToSearch value will be cryptoList.value that means we put all data in
+        //and if search stop we put search results in initialCryptoItem end will show results to user
+        // with  cryptoList.value = results
         val listToSearch = if (isSearchStarting) {
             cryptoList.value
         } else {
